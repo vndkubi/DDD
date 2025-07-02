@@ -1,5 +1,29 @@
 # DDD Java Example (Vertical Slice Architecture)
 
+## 💼 Business Domain & Rules
+
+This project models a simple **Customer and Order Management** system, demonstrating DDD best practices. The business context and rules are as follows:
+
+### Business Context
+- The system manages customers and their orders for a generic e-commerce or retail scenario.
+- Each customer can place multiple orders, and each order can contain multiple items (order lines).
+
+### Main Entities & Aggregates
+- **Customer**: Represents a user of the system. Each customer has a unique ID, name, email, phone number, address, and a customer tier (REGULAR, GOLD, VIP).
+- **Order**: Represents a purchase made by a customer. Each order has a unique ID, a list of order lines (items), a total amount, and a status (PENDING, CONFIRMED, SHIPPED, DELIVERED, CANCELLED).
+- **OrderLine**: Represents a single item in an order, including product ID, quantity, and price.
+- **Value Objects**: Email, Address, CustomerName, PhoneNumber, Money, etc. are modeled as immutable value objects.
+
+### Key Business Rules
+- **Customer Creation**: A customer must have a valid name, email, phone number, and address. Email and phone are validated for format.
+- **Order Creation**: Orders are created in a PENDING state and can have items added or removed while pending.
+- **Order Modification**: Items can only be added or removed from an order if it is in the PENDING state.
+- **Order Confirmation**: An order can only be confirmed if it contains at least one item and is still pending. Once confirmed, it cannot be modified.
+- **Customer Tier Upgrade**: Customers can be upgraded to VIP (business rule can be extended to check order count, total spent, etc.).
+- **Immutability**: Value objects are immutable and compared by value, not by reference.
+
+This business logic is enforced through aggregate roots, value objects, and domain services, following DDD principles.
+
 ## 🏗️ Project Structure
 
 This project demonstrates a clean Domain-Driven Design (DDD) architecture using **vertical slice (feature-based) structure** in Java.
@@ -116,5 +140,3 @@ void should_create_customer_successfully() {
 ---
 
 Feel free to extend with more features, REST APIs, or integrate with real databases!
-
-
